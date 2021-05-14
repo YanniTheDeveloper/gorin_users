@@ -6,4 +6,5 @@ class User {
   final String imageUrl;
 
   User({@required this.name, @required this.email, @required this.imageUrl});
+
 }
