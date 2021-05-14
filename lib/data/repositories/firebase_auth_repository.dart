@@ -1,13 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gorin_users/domain/repositories/auth_repository.dart';
 
-abstract class AuthRepositoryInterface {
-  Future<String> loginUser(String email, String password);
-  Future<String> registerUser(String email, String password);
-  Future<void> logoutUser();
-}
 
-class AuthRepository implements AuthRepositoryInterface {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+class FirebaseAuthRepository implements AuthRepository {
+  final FirebaseAuth _auth;
+
+  FirebaseAuthRepository({FirebaseAuth firebaseAuth})
+      : _auth = firebaseAuth ?? FirebaseAuth.instance;
+
+  @override
+  Future<bool> isAuthenticated() async {
+    final currentUser = _auth.currentUser;
+    return currentUser != null;
+  }
+
+  @override
+  Future<String> getUserId() async {
+    return (_auth.currentUser).uid;
+  }
 
   @override
   Future<String> loginUser(String email, String password) async =>

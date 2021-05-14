@@ -2,17 +2,40 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gorin_users/domain/repositories/auth_repository.dart';
+import 'package:gorin_users/domain/repositories/user_repository.dart';
+import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial());
+  final AuthRepository _authRepository;
+
+  AuthBloc({@required AuthRepository authRepository})
+      : assert(authRepository != null),
+        _authRepository = authRepository,
+        super(AppLoading());
 
   @override
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is AppStarted) {
+      yield* _mapAppStartedToState();
+    }
+  }
+
+  Stream<AuthState> _mapAppStartedToState() async* {
+    try {
+      final isSignedIn = await _authRepository.isAuthenticated();
+      if (!isSignedIn) {
+        yield Unauthenticated();
+      }
+      final userId = await _authRepository.getUserId();
+      yield Authenticated(userId);
+    } catch (_) {
+      yield Unauthenticated();
+    }
   }
 }
