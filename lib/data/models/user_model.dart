@@ -6,6 +6,7 @@ import 'package:gorin_users/utilities/convertors/timestamp_convertor.dart';
 part 'user_model.g.dart';
 
 @JsonSerializable(includeIfNull: false)
+@immutable
 class UserModel extends UserEntity {
   final String id;
   final String name;

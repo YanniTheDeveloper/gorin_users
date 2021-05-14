@@ -9,7 +9,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<void> createUser({@required UserEntity userEntity}) async =>
-      usersRef.add((UserModel.fromEntity(userEntity).toJson()));
+      usersRef.doc(userEntity.id).set((UserModel.fromEntity(userEntity).toJson()));
 
   @override
   Stream<List<UserEntity>> getUsers() =>
