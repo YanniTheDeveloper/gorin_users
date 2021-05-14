@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'No user yet!',
+          'No users yet!',
         ),
       ),
     );

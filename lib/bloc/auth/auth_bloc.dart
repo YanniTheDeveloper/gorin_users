@@ -28,12 +28,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapAppStartedToState() async* {
     try {
-      final isSignedIn = await _authRepository.isAuthenticated();
-      if (!isSignedIn) {
-        yield Unauthenticated();
-      }
       final userId = await _authRepository.getUserId();
-      yield Authenticated(userId);
+      if (userId!=null) {
+        yield Authenticated(userId);
+      }
+      yield Unauthenticated();
     } catch (_) {
       yield Unauthenticated();
     }
