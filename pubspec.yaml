@@ -36,7 +36,8 @@ dependencies:
   equatable: ^2.0.0
 
   # model related
-  json_serializable: ^4.1.1
+  json_annotation: 3.1.1 #^4.0.1
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -46,8 +47,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_annotation: ^4.0.1
-  build_runner: ^2.0.3
+
+  json_serializable: 3.5.1 #^4.1.1
+  build_runner: #^2.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
