@@ -52,9 +52,9 @@ class HomePage extends StatelessWidget {
                           )))
             ]);
           } else if (state is UsersEmpty) {
-            return Text("No users yet");
+            return Center(child: Text("No users yet"));
           } else {
-            return Text("Error Loading");
+            return Center(child: Text("Error Loading"));
           }
         },
       ),

@@ -8,7 +8,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 24),
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: ElevatedButton(
             onPressed: onLoginTap,
             style: ButtonStyle(

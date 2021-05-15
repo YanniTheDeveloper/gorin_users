@@ -64,14 +64,17 @@ class LoginPage extends StatelessWidget {
                             _credentialEntity.password = password;
                           },
                         ),
-                        LoginButton(onLoginTap: () {
-                          log("User: ${_credentialEntity.email}, password: ${_credentialEntity.password}");
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(LogInRequest(_credentialEntity));
-                        }),
                       ],
                     ),
                   ),
+                  Center(
+                      child: TextButton(
+                          child: Text("Forgotten password?"), onPressed: null)),
+                  LoginButton(onLoginTap: () {
+                    log("User: ${_credentialEntity.email}, password: ${_credentialEntity.password}");
+                    BlocProvider.of<AuthBloc>(context)
+                        .add(LogInRequest(_credentialEntity));
+                  }),
                   Center(child: Text("Don't have an account?")),
                   Center(
                       child: TextButton(

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:gorin_users/domain/entities/image_holder.dart';
 import 'package:gorin_users/domain/entities/user_entity.dart';
 import 'package:gorin_users/ui/pages/login_page.dart';
 import 'package:gorin_users/ui/widgets/buttons/register_button.dart';
+import 'package:gorin_users/ui/widgets/image_holders/profile_image_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/email_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/name_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/password_input.dart';
@@ -58,20 +60,12 @@ class RegisterPage extends StatelessWidget {
                       SizedBox(
                         height: 32,
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.blueGrey[600],
-                        radius: 48,
-                        child: GestureDetector(
-                          child: Icon(
-                            Icons.person,
-                            size: 36,
-                            color: Colors.white,
-                          ),
-                          onTap: () async {
-                            _imageHolder.image = await ImageTool.getImage();
-                          },
-                        ),
+                      ProfileImageInput(
+                        onImageTap: (File image){
+                          _imageHolder.image = image;
+                        },
                       ),
+
                       Container(
                         margin: EdgeInsets.all(24),
                         child: Column(

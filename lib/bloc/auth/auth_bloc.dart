@@ -59,8 +59,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _mapAppStartedToState() async* {
-    yield AppLoading();
-    sleep(Duration(milliseconds: 2500));
     try {
       final userId = await _getUserId.execute();
       if (userId != null) {
