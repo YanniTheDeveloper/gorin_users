@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_users/bloc/auth/auth_bloc.dart';
 import 'package:gorin_users/bloc/users/users_bloc.dart';
+import 'package:gorin_users/ui/widgets/loading/simple_loading.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    log("In home screen");
     return Scaffold(
       appBar: AppBar(
         title: Text("Gorin-Users"),
@@ -14,7 +18,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           if (state is UsersLoading) {
             // @TODO loading
-            return Text("Loading");
+            return SimpleLoading();
           } else if (state is UsersLoaded) {
             return Column(
               children: [Text("Yanni"), Text("Moshe")],

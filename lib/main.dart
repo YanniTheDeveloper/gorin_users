@@ -7,6 +7,7 @@ import 'package:gorin_users/data/repositories/firebase_auth_repository.dart';
 import 'package:gorin_users/data/repositories/firebase_user_repository.dart';
 import 'package:gorin_users/ui/pages/home_page.dart';
 import 'package:gorin_users/ui/pages/login_page.dart';
+import 'package:gorin_users/ui/pages/register_page.dart';
 import 'package:gorin_users/ui/pages/splash_screen.dart';
 
 void main() async {
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
               child: HomePage(),
             );
           } else {
-            return LoginPage();
+            return RegisterPage();
           }
         },
       ),

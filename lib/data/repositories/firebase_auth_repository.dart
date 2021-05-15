@@ -10,7 +10,7 @@ class FirebaseAuthRepository implements AuthRepository {
 
   @override
   Future<String> getUserId() async {
-    return (_auth.currentUser).uid;
+    return (_auth.currentUser)?.uid;
   }
 
   @override

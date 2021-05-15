@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -22,7 +23,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LogUserOut _logUserOut;
   final CreateUser _createUser;
 
-  AuthBloc({@required AuthRepository authRepository, @required UserRepository userRepository})
+  AuthBloc(
+      {@required AuthRepository authRepository,
+      @required UserRepository userRepository})
       : assert(authRepository != null),
         _getUserId = GetUserId(authRepository),
         _registerUser = RegisterUser(authRepository),
@@ -37,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is AppStarted) {
-      yield* updateUserAuthStatus();
+      yield* _mapAppStartedToState();
     } else if (event is LogInRequest) {
       yield* _mapLogInRequestToState(event.email, event.password);
     } else if (event is RegisterRequest) {
@@ -47,12 +50,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Stream<AuthState> updateUserAuthStatus() async* {
+  Stream<AuthState> _mapAppStartedToState() async* {
+    yield AppLoading();
+    sleep(Duration(milliseconds: 2500));
     try {
       final userId = await _getUserId.execute();
-      if (userId!=null) {
+      if (userId != null) {
         yield Authenticated(userId);
-      }else
+      } else
         yield Unauthenticated();
     } catch (_) {
       yield Unauthenticated();
@@ -61,22 +66,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapLogInRequestToState(
       String email, String password) async* {
-    await _logUserIn.execute(email: email, password: password);
-    updateUserAuthStatus();
+    final userId =  await _logUserIn.execute(email: email, password: password);
+    if (userId != null) {
+      yield Authenticated(userId);
+    } else
+      yield Unauthenticated();
   }
 
   Stream<AuthState> _mapRegisterRequestToState(
       UserEntity userEntity, String password) async* {
-    final userId = await _registerUser.execute(email: userEntity.email, password: password);
-    if (userId!=null) {
-      _createUser.execute(userEntity: userEntity..id = userId);
-    }else
+    final userId = await _registerUser.execute(
+        email: userEntity.email, password: password);
+    if (userId != null) {
+      await _createUser.execute(userEntity: userEntity..id = userId);
+      yield Authenticated(userId);
+    } else
       yield Unauthenticated();
   }
 
   Stream<AuthState> _mapLogOutRequestToState() async* {
     await _logUserOut.execute();
-    updateUserAuthStatus();
+    yield Unauthenticated();
   }
+
 
 }
