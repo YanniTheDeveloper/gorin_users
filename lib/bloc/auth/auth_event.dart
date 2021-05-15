@@ -10,13 +10,12 @@ class AppStarted extends AuthEvent {
 }
 
 class LogInRequest extends AuthEvent {
-  final String email;
-  final String password;
+  final CredentialEntity credentialEntity;
 
-  LogInRequest(this.email, this.password);
+  LogInRequest(this.credentialEntity);
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [credentialEntity];
 }
 
 class RegisterRequest extends AuthEvent {

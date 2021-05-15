@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PasswordInput extends StatefulWidget {
+  final Function(String) onPasswordChanged;
+
+  const PasswordInput({Key key, this.onPasswordChanged}) : super(key: key);
   _PasswordInputState createState() => _PasswordInputState();
 }
 
@@ -21,6 +24,7 @@ class _PasswordInputState extends State<PasswordInput> {
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 24),
             child: TextFormField(
+              onChanged: (value) => widget.onPasswordChanged(value),
               style: TextStyle(
                   fontSize: 18,
                   letterSpacing: 0.1,

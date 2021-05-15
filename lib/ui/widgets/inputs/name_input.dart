@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NameInput extends StatelessWidget {
+  final Function(String) onNameChanged;
+
+  const NameInput({Key key, @required this.onNameChanged}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -9,6 +13,7 @@ class NameInput extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 24),
         child: TextFormField(
+          onChanged: (value) => onNameChanged(value),
             style: TextStyle(
                 fontSize: 18,
                 letterSpacing: 0.1,

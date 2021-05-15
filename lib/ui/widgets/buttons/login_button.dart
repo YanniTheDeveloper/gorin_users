@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
+  final Function() onLoginTap;
+
+  const LoginButton({Key key, this.onLoginTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 24),
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onLoginTap,
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all(5),
                 backgroundColor:

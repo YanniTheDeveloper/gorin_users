@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RegisterButton extends StatelessWidget {
+  final Function() onRegisterTap;
+
+  const RegisterButton({Key key, @required this.onRegisterTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 24),
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onRegisterTap,
             style: ButtonStyle(
                 elevation: MaterialStateProperty.all(5),
                 backgroundColor:

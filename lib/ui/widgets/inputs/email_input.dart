@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class EmailInput extends StatelessWidget {
+  final Function(String) onEmailChanged;
+
+  const EmailInput({Key key, @required this.onEmailChanged}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -9,6 +13,7 @@ class EmailInput extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 24),
           child: TextFormField(
+            onChanged: (value) => onEmailChanged(value),
             style: TextStyle(
                 fontSize: 18,
                 letterSpacing: 0.1,

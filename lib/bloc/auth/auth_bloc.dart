@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:gorin_users/domain/entities/credential_entity.dart';
 import 'package:gorin_users/domain/entities/user_entity.dart';
 import 'package:gorin_users/domain/repositories/auth_repository.dart';
 import 'package:gorin_users/domain/repositories/user_repository.dart';
@@ -42,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LogInRequest) {
-      yield* _mapLogInRequestToState(event.email, event.password);
+      yield* _mapLogInRequestToState(event.credentialEntity);
     } else if (event is RegisterRequest) {
       yield* _mapRegisterRequestToState(event.userEntity, event.password);
     } else if (event is LogOutRequest) {
@@ -65,8 +66,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _mapLogInRequestToState(
-      String email, String password) async* {
-    final userId =  await _logUserIn.execute(email: email, password: password);
+      CredentialEntity credentialEntity) async* {
+    final userId =  await _logUserIn.execute(email: credentialEntity.email, password: credentialEntity.password);
     if (userId != null) {
       yield Authenticated(userId);
     } else
