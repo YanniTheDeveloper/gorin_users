@@ -8,11 +8,11 @@ class PasswordInput extends StatefulWidget {
 }
 
 class _PasswordInputState extends State<PasswordInput> {
-  bool _passwordVisible = false;
+  bool _passwordHidden = true;
 
   alterPasswordVisibility(bool visible) {
     setState(() {
-      _passwordVisible = visible;
+      _passwordHidden = visible;
     });
   }
 
@@ -42,15 +42,15 @@ class _PasswordInputState extends State<PasswordInput> {
                     //  color: Colors,
                     fontWeight: FontWeight.w500),
                 suffixIcon: IconButton(
-                  icon: Icon(_passwordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off),
+                  icon: Icon(_passwordHidden
+                      ? Icons.visibility_off
+                      : Icons.visibility),
                   onPressed: () {
-                    alterPasswordVisibility(!_passwordVisible);
+                    alterPasswordVisibility(!_passwordHidden);
                   },
                 ),
               ),
-              obscureText: _passwordVisible,
+              obscureText: _passwordHidden,
             )));
   }
 }
