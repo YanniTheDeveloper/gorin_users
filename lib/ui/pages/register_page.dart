@@ -35,10 +35,13 @@ class RegisterPage extends StatelessWidget {
                   builder: (BuildContext context) =>
                       PopUpLoading(message: "Registering user ..."));
             } else if (state is FailedToAuthenticate) {
+              log("failed to register!");
+              Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Failed to register user!")));
             } else {
-              Navigator.pop(context);
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
             }
           },
           child: SafeArea(

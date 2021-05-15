@@ -11,21 +11,22 @@ class SplashScreen extends StatelessWidget {
     log("In $id");
     return Scaffold(
       backgroundColor: Colors.blueGrey[600],
-      body: Column(
+      body: Center(child :  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Gorin-Users',
             style: TextStyle(
-              color: Colors.white12,
-              fontSize: 54,
+              color: Colors.white70,
+              fontSize: 44,
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 50,),
           SimpleLoading()
         ],
-      ),
+      )),
     );
   }
 }

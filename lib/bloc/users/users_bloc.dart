@@ -34,6 +34,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   Stream<UsersState> mapLoadUsersToState() async* {
     try {
       yield UsersLoading();
+      await Future.delayed(Duration(milliseconds: 3000), () {});
       _getUsersStream?.cancel();
       _getUsersStream = _getUsers.execute().listen((users) {
         log("In getUsers stream => users length:${users?.length}");

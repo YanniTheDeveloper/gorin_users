@@ -6,6 +6,7 @@ import 'package:gorin_users/bloc/auth/auth_bloc.dart';
 import 'package:gorin_users/bloc/users/users_bloc.dart';
 import 'package:gorin_users/ui/widgets/buttons/logout_button.dart';
 import 'package:gorin_users/ui/widgets/loading/simple_loading.dart';
+import 'package:gorin_users/ui/widgets/loading/simple_shimmer_loading.dart';
 import 'package:gorin_users/ui/widgets/tiles/users_list_tile.dart';
 
 class HomePage extends StatelessWidget {
@@ -29,8 +30,24 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<UsersBloc, UsersState>(
         builder: (context, state) {
           if (state is UsersLoading) {
-            // @TODO loading
-            return SimpleLoading();
+            return Stack(children: [
+              ListView.separated(
+                padding: EdgeInsets.only(bottom: 24),
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return SimpleShimmerLoading();
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+              ),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: LogoutButton(
+                      onLogoutTap: () => BlocProvider.of<AuthBloc>(context).add(
+                        LogOutRequest(),
+                      )))
+            ]);
           } else if (state is UsersLoaded) {
             return Stack(children: [
               ListView.separated(
@@ -54,7 +71,7 @@ class HomePage extends StatelessWidget {
           } else if (state is UsersEmpty) {
             return Center(child: Text("No users yet"));
           } else {
-            return Center(child: Text("Error Loading"));
+            return Center(child: Text(""));
           }
         },
       ),

@@ -30,9 +30,13 @@ class LoginPage extends StatelessWidget {
                             PopUpLoading(message: "Logging user in ..."))
                     .timeout(Duration(milliseconds: 3000));
               } else if (state is FailedToAuthenticate) {
+                log("failed to login!");
+                Navigator.of(context).pop();
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("Failed to login!")));
-              } else {}
+              } else {
+                Navigator.of(context).pop();
+              }
             },
             child: SafeArea(
                 child: Container(

@@ -42,6 +42,9 @@ dependencies:
   image_cropper: ^1.4.0
   image_picker: ^0.7.5
 
+  # ui effects
+  shimmer: ^2.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.

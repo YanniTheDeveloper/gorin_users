@@ -59,31 +59,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _mapAppStartedToState() async* {
-    try {
-      final userId = await _getUserId.execute();
-      if (userId != null) {
-        yield Authenticated(userId);
-      } else
+    await Future.delayed(Duration(milliseconds: 2000), () {});
+      try {
+        final userId = await _getUserId.execute();
+        if (userId != null) {
+          yield Authenticated(userId);
+        } else
+          yield Unauthenticated();
+      } catch (_) {
         yield Unauthenticated();
-    } catch (_) {
-      yield Unauthenticated();
-    }
+      }
   }
 
   Stream<AuthState> _mapLogInRequestToState(
       CredentialEntity credentialEntity) async* {
     yield Authenticating();
-    final userId = await _logUserIn.execute(
-        email: credentialEntity.email, password: credentialEntity.password);
-    if (userId != null) {
-      yield Authenticated(userId);
-    } else
+    try {
+      final userId = await _logUserIn.execute(
+          email: credentialEntity.email, password: credentialEntity.password);
+      if (userId != null) {
+        yield Authenticated(userId);
+      } else
+        yield FailedToAuthenticate();
+    }catch(e){
       yield FailedToAuthenticate();
+    }
   }
 
   Stream<AuthState> _mapRegisterRequestToState(
       File image, UserEntity userEntity, String password) async* {
     yield Authenticating();
+    try {
     final imageUrl = await _uploadFile.execute(
         file: image, userName: userEntity.name, extension: "png");
     if (imageUrl != null) {
@@ -98,6 +104,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       yield FailedToAuthenticate();
     }
+  }catch(e){
+  yield FailedToAuthenticate();
+  }
   }
 
   Stream<AuthState> _mapLogOutRequestToState() async* {

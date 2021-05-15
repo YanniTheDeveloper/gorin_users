@@ -13,7 +13,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Stream<List<UserEntity>> getUsers() =>
-      usersRef.snapshots().map((usersSnapshot) => usersSnapshot.docs
+      usersRef.orderBy("joined", descending: true).snapshots().map((usersSnapshot) => usersSnapshot.docs
           .map((user) => UserModel.fromJson(user.data()))
           .toList());
 }
