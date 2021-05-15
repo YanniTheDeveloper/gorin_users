@@ -7,9 +7,11 @@ import 'package:gorin_users/bloc/users/users_bloc.dart';
 import 'package:gorin_users/ui/widgets/loading/simple_loading.dart';
 
 class HomePage extends StatelessWidget {
+  static const id = "HomePage";
+
   @override
   Widget build(BuildContext context) {
-    log("In home screen");
+    log("In $id");
     return Scaffold(
       appBar: AppBar(
         title: Text("Gorin-Users"),

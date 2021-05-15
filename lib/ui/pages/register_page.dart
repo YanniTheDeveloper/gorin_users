@@ -1,20 +1,28 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gorin_users/ui/pages/login_page.dart';
 import 'package:gorin_users/ui/widgets/buttons/register_button.dart';
 import 'package:gorin_users/ui/widgets/inputs/email_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/name_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/password_input.dart';
 
+
 class RegisterPage extends StatelessWidget {
+  static const id = "RegisterPage";
+
   @override
   Widget build(BuildContext context) {
-    log("In Register screen");
+    log("In $id");
     return Scaffold(
       backgroundColor: Colors.blueGrey[200],
       body: SafeArea(
-          child: ListView(
-        padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
+          child: Container(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Center(
+                  child: SingleChildScrollView(
+                      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
               child: Text(
@@ -54,10 +62,12 @@ class RegisterPage extends StatelessWidget {
           Center(
               child: TextButton(
             child: Text("Login"),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(LoginPage.id);
+            },
           )),
         ],
-      )),
+      ))))),
     );
   }
 }

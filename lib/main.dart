@@ -9,6 +9,7 @@ import 'package:gorin_users/ui/pages/home_page.dart';
 import 'package:gorin_users/ui/pages/login_page.dart';
 import 'package:gorin_users/ui/pages/register_page.dart';
 import 'package:gorin_users/ui/pages/splash_screen.dart';
+import 'package:gorin_users/utilities/route/router.dart' as route;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      onGenerateRoute: route.generateRoute,
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AppLoading) {
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
               child: HomePage(),
             );
           } else {
-            return RegisterPage();
+            return LoginPage();
           }
         },
       ),
