@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_users/bloc/auth/auth_bloc.dart';
 import 'package:gorin_users/bloc/users/users_bloc.dart';
 import 'package:gorin_users/data/repositories/firebase_auth_repository.dart';
+import 'package:gorin_users/data/repositories/firebase_storage_repository.dart';
 import 'package:gorin_users/data/repositories/firebase_user_repository.dart';
 import 'package:gorin_users/ui/pages/home_page.dart';
 import 'package:gorin_users/ui/pages/login_page.dart';
@@ -17,7 +18,9 @@ void main() async {
   runApp(BlocProvider(
     create: (_) => AuthBloc(
         authRepository: FirebaseAuthRepository(),
-        userRepository: FirebaseUserRepository())
+        userRepository: FirebaseUserRepository(),
+        storageRepository: FirebaseStorageRepository()
+    )
       ..add(AppStarted()),
     child: MyApp(),
   ));

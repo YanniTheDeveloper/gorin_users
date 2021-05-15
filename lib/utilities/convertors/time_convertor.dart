@@ -9,7 +9,7 @@ class TimeToMomentConvertor {
 
     if(years > 1) return "$years years ago";
     else if(years == 1) return "Last year";
-    else if(months > 1) return "$months years ago";
+    else if(months > 1) return "$months months ago";
     else if(months == 1) return "Last month";
     else if(days > 7) return "This month";
     else if(days > 1) return "This week";

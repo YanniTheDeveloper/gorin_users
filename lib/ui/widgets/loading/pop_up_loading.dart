@@ -9,29 +9,23 @@ class PopUpLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Container(
         padding: EdgeInsets.all(16),
-        decoration: new BoxDecoration(
-          //color: Colors.blueGrey,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10.0,
-              offset: const Offset(0.0, 10.0),
-            ),
-          ],
-        ),
+        color: Colors.blueGrey[200].withOpacity(0.7),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
             SimpleLoading(),
+            SizedBox(
+              height: 32,
+            ),
             Text(message ?? "",
                 style: TextStyle(
+                  color: Colors.blueGrey[700],
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 )),

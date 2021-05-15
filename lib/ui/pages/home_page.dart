@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
           } else if (state is UsersLoaded) {
             return Stack(children: [
               ListView.separated(
+                padding: EdgeInsets.only(bottom: 24),
                 itemCount: state.users.length,
                 itemBuilder: (context, index) {
                   return UsersListTile(

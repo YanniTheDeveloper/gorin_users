@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gorin_users/bloc/auth/auth_bloc.dart';
 import 'package:gorin_users/domain/entities/credential_entity.dart';
+import 'package:gorin_users/domain/entities/image_holder.dart';
 import 'package:gorin_users/domain/entities/user_entity.dart';
 import 'package:gorin_users/ui/pages/login_page.dart';
 import 'package:gorin_users/ui/widgets/buttons/register_button.dart';
@@ -11,12 +12,13 @@ import 'package:gorin_users/ui/widgets/inputs/email_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/name_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/password_input.dart';
 import 'package:gorin_users/ui/widgets/loading/pop_up_loading.dart';
+import 'package:gorin_users/utilities/helper/image_tool.dart';
 
 class RegisterPage extends StatelessWidget {
   static const id = "RegisterPage";
   final UserEntity _userEntity = UserEntity.empty();
   final CredentialEntity _credentialEntity = CredentialEntity.empty();
-
+  final ImageHolder _imageHolder = ImageHolder.empty();
   @override
   Widget build(BuildContext context) {
     log("In $id");
@@ -65,7 +67,9 @@ class RegisterPage extends StatelessWidget {
                             size: 36,
                             color: Colors.white,
                           ),
-                          onTap: () {},
+                          onTap: () async {
+                            _imageHolder.image = await ImageTool.getImage();
+                          },
                         ),
                       ),
                       Container(
@@ -90,7 +94,7 @@ class RegisterPage extends StatelessWidget {
                             RegisterButton(onRegisterTap: () {
                               log("User: ${_userEntity.email}, password: ${_credentialEntity.password}");
                               BlocProvider.of<AuthBloc>(context).add(
-                                  RegisterRequest(
+                                  RegisterRequest(_imageHolder.image,
                                       _userEntity, _credentialEntity.password));
                             }),
                           ],

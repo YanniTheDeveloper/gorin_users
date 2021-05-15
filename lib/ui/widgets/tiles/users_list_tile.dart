@@ -10,22 +10,24 @@ class UsersListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.person),
-//      Container(
-//        child: ClipRRect(
-//            borderRadius: BorderRadius.all(
-//                Radius.circular(48)),
-//            child: Container(
-//              child: FadeInImage(
-//                image: NetworkImage(userEntity.imageUrl),
-//                placeholder: AssetImage(
-//                    "./assets/icon/avatar_256.png"),
-//                fit: BoxFit.cover,
-//              ),
-//              height: 56,
-//              width: 56,
-//            )),
-//      ),
+      leading:
+//      Icon(Icons.person),
+      Container(
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(
+                Radius.circular(48)),
+            child: Container(
+              child:
+              FadeInImage(
+                image: NetworkImage(userEntity.imageUrl??''),
+                placeholder: AssetImage(
+                    "./assets/icons/avatar_256.png"),
+                fit: BoxFit.cover,
+              ),
+              height: 40,
+              width: 40,
+            )),
+      ),
       title: Text(userEntity.name ?? "",
           style: TextStyle(
               fontSize: 16, letterSpacing: 0.1, fontWeight: FontWeight.w700)),

@@ -19,12 +19,13 @@ class LogInRequest extends AuthEvent {
 }
 
 class RegisterRequest extends AuthEvent {
+  final File image;
   final UserEntity userEntity;
   final String password;
 
-  RegisterRequest(this.userEntity, this.password);
+  RegisterRequest(this.image, this.userEntity, this.password);
 
   @override
-  List<Object> get props => [userEntity, password];
+  List<Object> get props => [image, userEntity, password];
 }
 class LogOutRequest extends AuthEvent {}
