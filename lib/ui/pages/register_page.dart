@@ -10,6 +10,7 @@ import 'package:gorin_users/ui/widgets/buttons/register_button.dart';
 import 'package:gorin_users/ui/widgets/inputs/email_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/name_input.dart';
 import 'package:gorin_users/ui/widgets/inputs/password_input.dart';
+import 'package:gorin_users/ui/widgets/loading/pop_up_loading.dart';
 
 class RegisterPage extends StatelessWidget {
   static const id = "RegisterPage";
@@ -20,77 +21,91 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     log("In $id");
     return Scaffold(
-      backgroundColor: Colors.blueGrey[200],
-      body: SafeArea(
-          child: Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Center(
-                  child: SingleChildScrollView(
-                      child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                      child: Text(
-                    "Sign up with email",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.blueGrey[700],
-                        fontWeight: FontWeight.w400),
-                  )),
-                  SizedBox(
-                    height: 32,
-                  ),
-                  CircleAvatar(
-                    backgroundColor: Colors.blueGrey[600],
-                    radius: 48,
-                    child: GestureDetector(
-                      child: Icon(
-                        Icons.person,
-                        size: 36,
-                        color: Colors.white,
+        backgroundColor: Colors.blueGrey[200],
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is Authenticating) {
+              log("authenticating . . .");
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      PopUpLoading(message: "Registering user ..."));
+            } else if (state is FailedToAuthenticate) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Failed to register user!")));
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          child: SafeArea(
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Center(
+                      child: SingleChildScrollView(
+                          child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                          child: Text(
+                        "Sign up with email",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.blueGrey[700],
+                            fontWeight: FontWeight.w400),
+                      )),
+                      SizedBox(
+                        height: 32,
                       ),
-                      onTap: () {},
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(24),
-                    child: Column(
-                      children: <Widget>[
-                        NameInput(
-                          onNameChanged: (String name) {
-                            _userEntity.name = name;
-                          },
+                      CircleAvatar(
+                        backgroundColor: Colors.blueGrey[600],
+                        radius: 48,
+                        child: GestureDetector(
+                          child: Icon(
+                            Icons.person,
+                            size: 36,
+                            color: Colors.white,
+                          ),
+                          onTap: () {},
                         ),
-                        EmailInput(
-                          onEmailChanged: (String email) {
-                            _userEntity.email = email;
-                          },
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(24),
+                        child: Column(
+                          children: <Widget>[
+                            NameInput(
+                              onNameChanged: (String name) {
+                                _userEntity.name = name;
+                              },
+                            ),
+                            EmailInput(
+                              onEmailChanged: (String email) {
+                                _userEntity.email = email;
+                              },
+                            ),
+                            PasswordInput(
+                              onPasswordChanged: (String password) {
+                                _credentialEntity.password = password;
+                              },
+                            ),
+                            RegisterButton(onRegisterTap: () {
+                              log("User: ${_userEntity.email}, password: ${_credentialEntity.password}");
+                              BlocProvider.of<AuthBloc>(context).add(
+                                  RegisterRequest(
+                                      _userEntity, _credentialEntity.password));
+                            }),
+                          ],
                         ),
-                        PasswordInput(
-                          onPasswordChanged: (String password) {
-                            _credentialEntity.password = password;
-                          },
-                        ),
-                        RegisterButton(
-                          onRegisterTap: () {
-                            log("User: ${_userEntity.email}, password: ${_credentialEntity.password}");
-                            BlocProvider.of<AuthBloc>(context)
-                                .add(RegisterRequest(_userEntity, _credentialEntity.password));
-                          }
-                        ),
-                      ],
-                    ),
-                  ),
-                  Center(child: Text("Already have an account?")),
-                  Center(
-                      child: TextButton(
-                    child: Text("Login"),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed(LoginPage.id);
-                    },
-                  )),
-                ],
-              ))))),
-    );
+                      ),
+                      Center(child: Text("Already have an account?")),
+                      Center(
+                          child: TextButton(
+                        child: Text("Login"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )),
+                    ],
+                  ))))),
+        ));
   }
 }

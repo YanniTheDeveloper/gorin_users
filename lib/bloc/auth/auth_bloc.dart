@@ -67,22 +67,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapLogInRequestToState(
       CredentialEntity credentialEntity) async* {
+    yield Authenticating();
     final userId =  await _logUserIn.execute(email: credentialEntity.email, password: credentialEntity.password);
     if (userId != null) {
       yield Authenticated(userId);
     } else
-      yield Unauthenticated();
+      yield FailedToAuthenticate();
   }
 
   Stream<AuthState> _mapRegisterRequestToState(
       UserEntity userEntity, String password) async* {
+    yield Authenticating();
     final userId = await _registerUser.execute(
         email: userEntity.email, password: password);
     if (userId != null) {
       await _createUser.execute(userEntity: userEntity..id = userId);
       yield Authenticated(userId);
     } else
-      yield Unauthenticated();
+      yield FailedToAuthenticate();
   }
 
   Stream<AuthState> _mapLogOutRequestToState() async* {

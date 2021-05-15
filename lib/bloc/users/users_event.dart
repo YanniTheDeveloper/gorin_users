@@ -8,3 +8,10 @@ abstract class UsersEvent extends Equatable {
 
 class LoadUsers extends UsersEvent {
 }
+class _UpdateUsersState extends UsersEvent {
+  final UsersState usersState;
+
+  _UpdateUsersState(this.usersState);
+  @override
+  List<Object> get props => [usersState];
+}

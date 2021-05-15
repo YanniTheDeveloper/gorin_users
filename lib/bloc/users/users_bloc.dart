@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:gorin_users/domain/entities/user_entity.dart';
@@ -25,6 +26,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   ) async* {
     if (event is LoadUsers) {
       yield* mapLoadUsersToState();
+    } else if (event is _UpdateUsersState){
+      yield* mapUpdateUsersStateToState(event.usersState);
     }
   }
 
@@ -33,16 +36,17 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       yield UsersLoading();
       _getUsersStream?.cancel();
       _getUsersStream = _getUsers.execute().listen((users) {
+        log("In getUsers stream => users length:${users?.length}");
         users.isEmpty
-            ? updateUsersState(UsersEmpty())
-            : updateUsersState(UsersLoaded(users));
-      }, onError: (err) => updateUsersState(FailedToLoad()));
+            ? add(_UpdateUsersState(UsersEmpty()))
+            : add(_UpdateUsersState(UsersLoaded(users)));
+      }, onError: (err) => add(_UpdateUsersState(FailedToLoad())));
     } catch (_) {
       yield FailedToLoad();
     }
   }
 
-  Stream<UsersState> updateUsersState(UsersState state) async* {
+  Stream<UsersState> mapUpdateUsersStateToState(UsersState state) async* {
     yield state;
   }
 

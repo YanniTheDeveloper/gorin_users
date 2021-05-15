@@ -9,7 +9,11 @@ abstract class AuthState extends Equatable {
 
 class AppLoading extends AuthState {
 }
+class Authenticating extends AuthState {
+}
+class FailedToAuthenticate extends AuthState{
 
+}
 class Authenticated extends AuthState {
   final String userId;
 
