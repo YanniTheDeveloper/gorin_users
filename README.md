@@ -2,7 +2,7 @@
 
 A new Flutter application.
 
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=YanniTheDeveloper)](https://github.com/YanniTheDeveloper/github-readme-stats)
+[![Yanni's GitHub stats](https://github-readme-stats.vercel.app/api?username=YanniTheDeveloper)](https://github.com/YanniTheDeveloper/github-readme-stats)
 
 
 ## Getting Started
