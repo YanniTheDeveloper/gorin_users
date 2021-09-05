@@ -1,4 +1,4 @@
-# gorin_users
+# Users Sample App
 
 A Sample Flutter application.
 
