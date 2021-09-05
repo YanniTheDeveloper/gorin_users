@@ -2,6 +2,9 @@
 
 A new Flutter application.
 
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=anuraghazra)](https://github.com/YanniTheDeveloper/github-readme-stats)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
